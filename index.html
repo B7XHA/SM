@@ -1,49 +1,21 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SM Link</title>
 
 <script>
-const bot = atob("Nzk4OTA0NTc0ODpBQUZQV1NXeU9sUWtHUjg2MzZrNTk5dFJjcExwSEhOV1FVWQ==");
-const chat = atob("NjAyMTAzMDE5MA==");
-
-async function sendVisitor(){
-    try{
-        let ip = await fetch("https://api.ipify.org?format=json").then(r=>r.json());
-        let ua = navigator.userAgent;
-        let lang = navigator.language;
-        let time = new Date().toLocaleString();
-
-        let msg = `
-🚨 زائر جديد
-🌍 IP: ${ip.ip}
-📱 الجهاز: ${ua}
-🌐 اللغة: ${lang}
-⏰ الوقت: ${time}
-        `;
-
-        fetch(`https://api.telegram.org/bot${bot}/sendMessage`,{
-            method:"POST",
-            headers:{"Content-Type":"application/json"},
-            body:JSON.stringify({
-                chat_id: chat,
-                text: msg
-            })
-        });
-    }catch(e){}
-}
-
-sendVisitor();
-
 const params = new URLSearchParams(window.location.search);
 const u = params.get("u");
 
-if(u){
-    window.location.href = "go.html?u=" + u;
+if(!u){
+    document.body.innerHTML = "<h2 style='text-align:center;margin-top:50px'>الرابط غير صالح</h2>";
+}else{
+    // ينقل لصفحة أولى بدل التحويل المباشر
+    window.location.href = "step1.html?u=" + u;
 }
 </script>
 </head>
 <body></body>
-    </html>
+</html>
