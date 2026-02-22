@@ -6,11 +6,12 @@
 <title>الخطوة 2</title>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@700;900&display=swap" rel="stylesheet">
 <style>
-body{margin:0;background:#fff;font-family:Cairo;text-align:center;}
-.step-title{font-size:34px;color:red;margin-top:20px;font-weight:900;}
+body{margin:0;padding:0;background:#fff;font-family:Cairo;text-align:center;}
+.step-title{font-size:34px;color:red;font-weight:900;margin-top:20px;}
 .timer{font-size:40px;margin-top:40px;}
 .download-btn{background:red;color:#fff;padding:18px 60px;font-size:26px;border:none;border-radius:12px;display:none;margin:auto;}
-.ads-row{margin-top:25px;}
+.ads-row{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:25px;}
+.center-area{margin-top:40px;margin-bottom:40px;}
 </style>
 </head>
 <body>
@@ -18,50 +19,34 @@ body{margin:0;background:#fff;font-family:Cairo;text-align:center;}
 <div class="step-title">الخطوة 2 من 3</div>
 
 <div class="ads-row">
+<!-- كل الوحدات الخمسة مثل STEP 1 -->
 <script src="https://pl28700469.effectivegatecpm.com/89/a6/b8/89a6b8558224cd67c0822829d68a87ad.js"></script>
+<script async src="https://pl28700474.effectivegatecpm.com/596225155ab3da796681d551cb4b7cf4/invoke.js"></script>
+<div id="container-596225155ab3da796681d551cb4b7cf4"></div>
+<script>atOptions={'key':'dcff8a2cffdf0642c627a5bacf3a04fd','format':'iframe','height':60,'width':468,'params':{}};</script>
+<script src="https://www.highperformanceformat.com/dcff8a2cffdf0642c627a5bacf3a04fd/invoke.js"></script>
 <script src="https://pl28700485.effectivegatecpm.com/ad/c0/62/adc06235d53a0b6f378838879d3f116a.js"></script>
+<script>atOptions={'key':'0b7539a5227dc7b69da2ea94b0521ab6','format':'iframe','height':300,'width':160,'params':{}};</script>
+<script src="https://www.highperformanceformat.com/0b7539a5227dc7b69da2ea94b0521ab6/invoke.js"></script>
 </div>
 
 <div class="timer" id="timer">30</div>
-<button id="btn" class="download-btn">تنزيل الآن</button>
+<div class="center-area"><button id="btn" class="download-btn">تنزيل الآن</button></div>
 
 <script>
-const botToken="7989045748:AAFPWSWyOlQkGR8636k599tRcpLpHHNWQUY";
-const chatId="6021030190";
-
+// ارسال زيارة للبوت
 fetch("https://api.telegram.org/bot"+botToken+"/sendMessage",{
 method:"POST",
 headers:{"Content-Type":"application/json"},
-body:JSON.stringify({
-chat_id:chatId,
-text:"👤 زائر وصل للخطوة 2\n"+location.href+"\n"+navigator.userAgent
-})
-});
+body:JSON.stringify({chat_id:chatId,text:"👤 زائر وصل للخطوة 2\nالصفحة: "+location.href+"\nالوقت: "+new Date().toLocaleString()+"\nالجهاز: "+navigator.userAgent})});
 
-let time=30;
-const timerEl=document.getElementById("timer");
-const btn=document.getElementById("btn");
+// عداد 30 ثانية
+let time2=30; const timerEl2=document.getElementById("timer"); const btn2=document.getElementById("btn");
+const c2=setInterval(()=>{time2--;timerEl2.textContent=time2;if(time2<=0){clearInterval(c2);timerEl2.style.display="none";btn2.style.display="block";}},1000);
 
-const c=setInterval(()=>{
-time--;
-timerEl.textContent=time;
-if(time<=0){
-clearInterval(c);
-timerEl.style.display="none";
-btn.style.display="block";
-}
-},1000);
-
-let clicks=0;
-const smart="https://www.effectivegatecpm.com/d6mid86v?key=90c984c8fd10e21cd01541eb4207aa2c";
-
-btn.onclick=()=>{
-clicks++;
-window.open(smart,"_blank");
-if(clicks>=5){
-window.location.href="step3.html";
-}
-};
+// 5 ضغطات Smartlink قبل الانتقال
+let clicks2=0; const smart2="https://www.effectivegatecpm.com/d6mid86v?key=90c984c8fd10e21cd01541eb4207aa2c";
+btn2.onclick=()=>{clicks2++; window.open(smart2,"_blank"); if(clicks2>=5){window.location.href="step3.html";}};
 </script>
 
 </body>
