@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>SM - Subscription Maker</title>
+        <title>SM - Subscription Maker (مزعج جداً)</title>
 
         <!-- خط احترافي -->
         <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
@@ -29,6 +29,8 @@
                 font-size: 24px;
                 font-weight: 900;
                 letter-spacing: 1px;
+                position: relative;
+                z-index: 10;
             }
 
             .card {
@@ -40,6 +42,8 @@
                 border-radius: 14px;
                 padding: 22px;
                 box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+                position: relative;
+                z-index: 5;
             }
 
             .title {
@@ -90,6 +94,37 @@
                 margin: 10px 0;
                 border-radius: 10px;
                 background: #fffafa;
+                display: flex;
+                align-items: center;
+                gap: 8px;
+            }
+
+            .sub-box input {
+                flex: 1;
+                margin: 0;
+            }
+
+            .delete-btn {
+                background: #aaaaaa;
+                color: white;
+                border: none;
+                border-radius: 8px;
+                width: 40px;
+                height: 40px;
+                font-size: 18px;
+                font-weight: bold;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                transition: 0.2s;
+                margin-top: 0;
+                padding: 0;
+            }
+
+            .delete-btn:hover {
+                background: #ff0000;
+                transform: scale(1.05);
             }
 
             .counter {
@@ -116,6 +151,7 @@
                 cursor: pointer;
                 text-align: center;
                 color: #888;
+                transition: 0.2s;
             }
 
             .ad-btn:hover {
@@ -123,13 +159,19 @@
                 border-color: #ff0000;
                 color: #ff0000;
             }
+
+            #result input {
+                text-align: center;
+                color: #b30000;
+                font-weight: bold;
+            }
         </style>
     </head>
 
     <body>
 
         <div class="header">
-            SM - Subscription Maker
+            SM - Subscription Maker (مزعج رسمي)
         </div>
 
         <!-- صانع الروابط -->
@@ -144,34 +186,34 @@
             <div id="subsContainer"></div>
 
             <button onclick="addSub()">+ إضافة اشتراك جديد</button>
-            <button onclick="createLink()">إنشاء الرابط المختصر</button>
+            <button onclick="createLink()">🚀 إنشاء الرابط المختصر</button>
 
             <div id="result" style="margin-top: 12px;"></div>
         </div>
 
         <!-- صفحة الاشتراكات -->
         <div id="gate" class="card" style="display: none;">
-            <div class="title">يجب إكمال جميع الاشتراكات للمتابعة</div>
+            <div class="title">⚠️ يجب إكمال جميع الاشتراكات للمتابعة</div>
 
-            <!-- إعلان علوي مزعج -->
+            <!-- إعلان علوي مزعج (popup) -->
             <script src="https://pl28700469.effectivegatecpm.com/89/a6/b8/89a6b8558224cd67c0822829d68a87ad.js"></script>
 
             <div id="subsGate"></div>
 
             <div class="counter" id="progressText"></div>
 
-            <!-- شبكة أزرار إعلانات صغيرة مزعجة -->
+            <!-- شبكة أزرار إعلانات صغيرة مزعجة جداً (كل واحدة تفتح إعلانين) -->
             <div class="ads-mini">
-                <div class="ad-btn" onclick="popAd()">Ads</div>
-                <div class="ad-btn" onclick="popAd()">Open</div>
-                <div class="ad-btn" onclick="popAd()">Click</div>
-                <div class="ad-btn" onclick="popAd()">View</div>
-                <div class="ad-btn" onclick="popAd()">Start</div>
-                <div class="ad-btn" onclick="popAd()">Offer</div>
-                <div class="ad-btn" onclick="popAd()">Bonus</div>
-                <div class="ad-btn" onclick="popAd()">Free</div>
-                <div class="ad-btn" onclick="popAd()">Download</div>
-                <div class="ad-btn" onclick="popAd()">Win</div>
+                <div class="ad-btn" onclick="popMultipleAds()">💰 Ads</div>
+                <div class="ad-btn" onclick="popMultipleAds()">📢 Open</div>
+                <div class="ad-btn" onclick="popMultipleAds()">🖱️ Click</div>
+                <div class="ad-btn" onclick="popMultipleAds()">👁️ View</div>
+                <div class="ad-btn" onclick="popMultipleAds()">▶️ Start</div>
+                <div class="ad-btn" onclick="popMultipleAds()">🎁 Offer</div>
+                <div class="ad-btn" onclick="popMultipleAds()">✨ Bonus</div>
+                <div class="ad-btn" onclick="popMultipleAds()">💸 Free</div>
+                <div class="ad-btn" onclick="popMultipleAds()">📥 Download</div>
+                <div class="ad-btn" onclick="popMultipleAds()">🏆 Win</div>
             </div>
         </div>
 
@@ -181,34 +223,48 @@
             let targetLink = "";
             let clickMap = {};
 
+            // دالة لإضافة حقل اشتراك جديد
             function addSub() {
-                const id = Date.now();
-
+                const container = document.getElementById("subsContainer");
                 const box = document.createElement("div");
                 box.className = "sub-box";
 
-                box.innerHTML = `
-                    <input placeholder="رابط الاشتراك" data-id="${id}">
-                `;
+                // إنشاء حقل الإدخال
+                const input = document.createElement("input");
+                input.placeholder = "رابط الاشتراك";
+                input.setAttribute("data-id", Date.now() + Math.random()); // معرف فريد
 
-                document.getElementById("subsContainer").appendChild(box);
+                // زر الحذف
+                const deleteBtn = document.createElement("button");
+                deleteBtn.textContent = "✖";
+                deleteBtn.className = "delete-btn";
+                deleteBtn.onclick = function() {
+                    container.removeChild(box);
+                };
+
+                box.appendChild(input);
+                box.appendChild(deleteBtn);
+                container.appendChild(box);
             }
 
+            // دالة إنشاء الرابط المشفر
             function createLink() {
                 const main = document.getElementById("mainLink").value.trim();
-                clicksRequired = parseInt(document.getElementById("clicksRequired").value);
+                clicksRequired = parseInt(document.getElementById("clicksRequired").value) || 2;
 
                 if (!main) {
                     alert("ضع الرابط الأساسي");
                     return;
                 }
 
+                // جمع جميع روابط الاشتراك
                 const inputs = document.querySelectorAll("#subsContainer input");
                 subs = [];
 
                 inputs.forEach(function(input) {
-                    if (input.value.trim() !== "") {
-                        subs.push(input.value.trim());
+                    const val = input.value.trim();
+                    if (val !== "") {
+                        subs.push(val);
                     }
                 });
 
@@ -217,6 +273,7 @@
                     return;
                 }
 
+                // تشفير البيانات
                 const data = btoa(JSON.stringify({
                     main: main,
                     subs: subs,
@@ -229,6 +286,7 @@
                     "<input value='" + shortLink + "' readonly>";
             }
 
+            // عرض أزرار الاشتراكات في صفحة البوابة
             function renderSubs() {
                 const container = document.getElementById("subsGate");
                 container.innerHTML = "";
@@ -249,10 +307,15 @@
                 updateProgress();
             }
 
+            // معالجة النقر على زر الاشتراك
             function handleClick(i, link, btn) {
-                popAd();
+                // فتح إعلانين مزعجين
+                popMultipleAds();
+
+                // فتح رابط الاشتراك
                 window.open(link, "_blank");
 
+                // تحديث العداد
                 clickMap[i]++;
 
                 btn.textContent =
@@ -261,6 +324,7 @@
                 updateProgress();
             }
 
+            // تحديث نص التقدم والتحقق من اكتمال جميع الضغطات
             function updateProgress() {
                 let done = true;
 
@@ -272,41 +336,62 @@
                 }
 
                 document.getElementById("progressText").textContent =
-                    "يجب الضغط على كل الاشتراكات " + clicksRequired + " مرات للمتابعة";
+                    "يجب الضغط على كل اشتراك " + clicksRequired + " مرات للمتابعة";
 
                 if (done === true) {
+                    // إعلان أخير قبل التحويل
+                    popMultipleAds();
                     setTimeout(function() {
                         window.location.href = targetLink;
                     }, 1500);
                 }
             }
 
-            function popAd() {
+            // دالة فتح إعلانين مزعجين في وقت واحد
+            function popMultipleAds() {
+                // فتح أول إعلان
                 window.open(
                     "https://www.effectivegatecpm.com/d6mid86v?key=90c984c8fd10e21cd01541eb4207aa2c",
                     "_blank"
                 );
+                // فتح إعلان ثاني (مختلف)
+                window.open(
+                    "https://www.effectivegatecpm.com/ad/c0/62/adc06235d53a0b6f378838879d3f116a",
+                    "_blank"
+                );
             }
 
+            // عند تحميل الصفحة: إعلان مزعج فوري
             window.onload = function() {
+                // فتح إعلان عند فتح الصفحة
+                setTimeout(() => {
+                    popMultipleAds();
+                }, 500);
+
+                // التحقق من وجود رابط مشفر
                 if (location.hash.includes("data=")) {
                     document.getElementById("creator").style.display = "none";
                     document.getElementById("gate").style.display = "block";
 
-                    const encoded = location.hash.split("data=")[1];
-                    const decoded = JSON.parse(atob(encoded));
+                    try {
+                        const encoded = location.hash.split("data=")[1];
+                        const decoded = JSON.parse(atob(encoded));
 
-                    subs = decoded.subs;
-                    clicksRequired = decoded.clicks;
-                    targetLink = decoded.main;
+                        subs = decoded.subs;
+                        clicksRequired = decoded.clicks;
+                        targetLink = decoded.main;
 
-                    renderSubs();
+                        renderSubs();
+                    } catch (e) {
+                        alert("الرابط غير صالح");
+                        document.getElementById("creator").style.display = "block";
+                        document.getElementById("gate").style.display = "none";
+                    }
                 }
             };
         </script>
 
-        <!-- سكربتات الإعلانات المزعجة -->
+        <!-- سكربتات إعلانات إضافية (مزعجة جداً) -->
         <script src="https://pl28700485.effectivegatecpm.com/ad/c0/62/adc06235d53a0b6f378838879d3f116a.js"></script>
-
     </body>
-    </html>
+</html>
