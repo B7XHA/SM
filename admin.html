@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SM Admin Panel</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+body{
+    margin:0;
+    font-family:'Cairo', sans-serif;
+    background:#ffffff;
+}
+.header{
+    background:#e60023;
+    color:white;
+    padding:20px;
+    text-align:center;
+    font-size:28px;
+    font-weight:bold;
+    letter-spacing:2px;
+}
+.container{
+    max-width:500px;
+    margin:60px auto;
+    background:white;
+    border-radius:12px;
+    box-shadow:0 0 25px rgba(0,0,0,0.1);
+    padding:30px;
+    text-align:center;
+}
+input{
+    width:100%;
+    padding:15px;
+    border:2px solid #e60023;
+    border-radius:8px;
+    font-size:16px;
+    margin-bottom:20px;
+    outline:none;
+}
+button{
+    background:#e60023;
+    color:white;
+    border:none;
+    padding:15px 25px;
+    border-radius:8px;
+    font-size:18px;
+    cursor:pointer;
+    width:100%;
+}
+button:hover{
+    background:#c4001e;
+}
+.result{
+    margin-top:20px;
+    background:#f5f5f5;
+    padding:15px;
+    border-radius:8px;
+    word-break:break-all;
+}
+</style>
+</head>
+<body>
+
+<div class="header">SM - Admin Panel</div>
+
+<div class="container">
+    <h2>اختصار رابط جديد</h2>
+    <input type="text" id="url" placeholder="ضع الرابط هنا...">
+    <button onclick="generate()">تشفير وإنشاء الرابط</button>
+    <div class="result" id="result"></div>
+</div>
+
+<script>
+function generate(){
+    let url = document.getElementById("url").value;
+    if(!url){
+        alert("ضع الرابط أولاً");
+        return;
+    }
+    let encoded = btoa(url);
+    let finalLink = location.origin + "/index.html?u=" + encoded;
+    document.getElementById("result").innerText = finalLink;
+}
+</script>
+
+</body>
+  </html>
