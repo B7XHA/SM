@@ -3,63 +3,96 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Subscription Maker - SM</title>
+<title>SM - Subscription Maker</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
 
 <style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Cairo',sans-serif;}
+
 body{
-    margin:0;
-    font-family:Arial;
     background:#ffffff;
     color:#111;
-    text-align:center;
 }
 
 .header{
-    background:#e60000;
+    background:linear-gradient(90deg,#ff0000,#b30000);
     color:white;
-    padding:15px;
-    font-size:22px;
-    font-weight:bold;
+    padding:18px;
+    text-align:center;
+    font-size:24px;
+    font-weight:900;
 }
 
-.box{
+.card{
     width:95%;
-    max-width:600px;
-    margin:30px auto;
+    max-width:550px;
+    margin:20px auto;
     background:#fff;
-    border:2px solid #e60000;
-    border-radius:10px;
+    border:2px solid #ff0000;
+    border-radius:14px;
     padding:20px;
+    box-shadow:0 8px 25px rgba(0,0,0,0.1);
+}
+
+.title{
+    color:#b30000;
+    font-size:20px;
+    font-weight:700;
+    margin-bottom:10px;
 }
 
 input{
-    width:95%;
-    padding:12px;
-    margin:10px 0;
+    width:100%;
+    padding:14px;
+    margin:8px 0;
+    border-radius:10px;
     border:1px solid #ddd;
-    border-radius:6px;
     font-size:14px;
 }
 
 button{
-    background:#e60000;
-    color:#fff;
+    width:100%;
+    padding:14px;
+    margin-top:8px;
     border:none;
-    padding:12px 18px;
-    margin:5px;
-    border-radius:6px;
+    border-radius:10px;
+    background:#ff0000;
+    color:white;
+    font-weight:700;
     cursor:pointer;
-    font-size:14px;
 }
 
-button:hover{
-    background:#c40000;
+button:hover{background:#cc0000;}
+
+.sub-box{
+    border:1px dashed #ff0000;
+    padding:10px;
+    margin:10px 0;
+    border-radius:10px;
 }
 
-.count{
-    font-size:26px;
-    color:#e60000;
-    margin:10px;
+.counter{
+    font-size:18px;
+    color:#ff0000;
+    font-weight:900;
+    margin:10px 0;
+}
+
+.ads-mini{
+    display:grid;
+    grid-template-columns:repeat(5,1fr);
+    gap:6px;
+    margin-top:10px;
+}
+
+.ad-btn{
+    font-size:10px;
+    padding:6px;
+    border:1px solid #eee;
+    border-radius:6px;
+    background:#fff;
+    cursor:pointer;
 }
 </style>
 </head>
@@ -67,175 +100,156 @@ button:hover{
 
 <div class="header">SM - Subscription Maker</div>
 
-<!-- صفحة إنشاء الروابط -->
-<div id="creator" class="box">
-    <h3>إنشاء رابط باشتراك إجباري</h3>
-    <input id="mainLink" placeholder="الرابط الأساسي">
-    <input id="subLink" placeholder="رابط الاشتراك (قناة / موقع)">
-    <br>
-    <button onclick="createLink()">إنشاء الرابط</button>
-    <div id="result"></div>
+<!-- صانع الروابط -->
+<div id="creator" class="card">
+    <div class="title">الرابط الأساسي</div>
+    <input id="mainLink" placeholder="ضع الرابط الأساسي">
+
+    <div class="title">عدد الضغطات المطلوبة لكل اشتراك</div>
+    <input id="clicksRequired" type="number" value="2">
+
+    <div class="title">روابط الاشتراك</div>
+    <div id="subsContainer"></div>
+
+    <button onclick="addSub()">+ إضافة اشتراك جديد</button>
+    <button onclick="createLink()">إنشاء الرابط المختصر</button>
+
+    <div id="result" style="margin-top:10px;"></div>
 </div>
 
-<!-- بوابة الاشتراك -->
-<div id="gate" class="box" style="display:none;">
-    <h3>اشتراك إجباري</h3>
-    <p>يجب الاشتراك للمتابعة</p>
-    <button onclick="openSub()">الاشتراك الآن</button>
-    <button onclick="continueAds()">تم الاشتراك</button>
-</div>
+<!-- صفحة الاشتراكات -->
+<div id="gate" class="card" style="display:none;">
+    <div class="title">يجب إكمال الاشتراكات للمتابعة</div>
+    <div id="subsGate"></div>
 
-<!-- صفحة الإعلانات -->
-<div id="ads" class="box" style="display:none;">
-    <h3>جاري تجهيز الرابط...</h3>
-    <div class="count" id="timer">12</div>
+    <div class="counter" id="progressText"></div>
+
+    <!-- إعلانات مزعجة -->
+    <div class="ads-mini">
+        <div class="ad-btn" onclick="popAd()">Ads</div>
+        <div class="ad-btn" onclick="popAd()">Open</div>
+        <div class="ad-btn" onclick="popAd()">Click</div>
+        <div class="ad-btn" onclick="popAd()">View</div>
+        <div class="ad-btn" onclick="popAd()">Start</div>
+        <div class="ad-btn" onclick="popAd()">Win</div>
+        <div class="ad-btn" onclick="popAd()">Offer</div>
+        <div class="ad-btn" onclick="popAd()">Bonus</div>
+        <div class="ad-btn" onclick="popAd()">Free</div>
+        <div class="ad-btn" onclick="popAd()">Download</div>
+    </div>
 </div>
 
 <script>
-// ===== تشفير التوكن والآي دي (مخفي ومشوّش) =====
-const _0xT = ["Nzk4OTA0NTc0ODpBQUZQV1NXeU9sUWtHUjg2MzZrNTk5dFJjcExwSEhOV1FVWQ=="];
-const _0xC = ["NjAyMTAzMDE5MA=="];
+let subs = [];
+let clicksRequired = 2;
+let targetLink = "";
+let clickMap = {};
 
-function _d(x){ return atob(x); }
-
-const BOT_TOKEN = _d(_0xT[0]);
-const CHAT_ID = _d(_0xC[0]);
-
-// ===== معرف جهاز مميز =====
-function getDeviceID(){
-    let id = localStorage.getItem("sm_device_id");
-    if(!id){
-        id = 'SM-' + Math.random().toString(36).substring(2,10);
-        localStorage.setItem("sm_device_id", id);
-    }
-    return id;
+// إضافة اشتراك لا نهائي
+function addSub(){
+    const id = Date.now();
+    const box = document.createElement("div");
+    box.className = "sub-box";
+    box.innerHTML = `<input placeholder="رابط الاشتراك" data-id="${id}">`;
+    document.getElementById("subsContainer").appendChild(box);
 }
 
-// ===== معلومات الجهاز =====
-function getDeviceInfo(){
-    const ua = navigator.userAgent;
-    let device = "Desktop";
-    if(/android/i.test(ua)) device="Android 📱";
-    if(/iphone|ipad|ipod/i.test(ua)) device="iPhone 🍎";
-
-    return {
-        ua: ua,
-        lang: navigator.language,
-        platform: navigator.platform,
-        screen: screen.width+"x"+screen.height,
-        device: device
-    };
-}
-
-// ===== كشف VPN / Proxy + IP =====
-async function detectNetwork(){
-    try{
-        const res = await fetch("https://ipapi.co/json/");
-        const data = await res.json();
-        return {
-            ip: data.ip,
-            country: data.country_name,
-            vpn: data.proxy || data.vpn || false,
-            org: data.org
-        };
-    }catch{
-        return {ip:"Unknown", country:"Unknown", vpn:"Unknown", org:"Unknown"};
-    }
-}
-
-// ===== إرسال رسالة للبوت =====
-async function sendToBot(type){
-    const device = getDeviceInfo();
-    const net = await detectNetwork();
-    const deviceID = getDeviceID();
-
-    const msg = `
-🚀 Subscription Maker (SM)
-
-📌 الحدث: ${type}
-🆔 معرف الجهاز: ${deviceID}
-📱 الجهاز: ${device.device}
-💻 النظام: ${device.platform}
-🌐 اللغة: ${device.lang}
-🖥️ الشاشة: ${device.screen}
-
-🌍 الدولة: ${net.country}
-📡 IP: ${net.ip}
-🛡️ VPN/Proxy: ${net.vpn ? "نعم 🚨" : "لا"}
-🏢 الشبكة: ${net.org}
-`;
-
-    fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`,{
-        method:"POST",
-        headers:{"Content-Type":"application/json"},
-        body:JSON.stringify({
-            chat_id: CHAT_ID,
-            text: msg
-        })
-    });
-}
-
-// ===== إنشاء رابط =====
+// إنشاء الرابط
 function createLink(){
     const main = document.getElementById("mainLink").value;
-    const sub = document.getElementById("subLink").value;
+    clicksRequired = parseInt(document.getElementById("clicksRequired").value);
 
-    if(!main || !sub){
-        alert("املأ الحقول");
+    if(!main){ alert("ضع الرابط الأساسي"); return; }
+
+    const inputs = document.querySelectorAll("#subsContainer input");
+    subs = [];
+    inputs.forEach(i=>{
+        if(i.value) subs.push(i.value);
+    });
+
+    if(subs.length === 0){
+        alert("أضف اشتراك واحد على الأقل");
         return;
     }
 
-    const link = location.origin + location.pathname +
-        "#go=" + btoa(main) + "&sub=" + btoa(sub);
+    const data = btoa(JSON.stringify({
+        main: main,
+        subs: subs,
+        clicks: clicksRequired
+    }));
 
+    const link = location.origin + location.pathname + "#data=" + data;
     document.getElementById("result").innerHTML =
-        "<p>رابطك:</p><input value='"+link+"' readonly>";
-
-    sendToBot("تم إنشاء رابط جديد 🔗");
+        "<input value='"+link+"' readonly>";
 }
 
-// ===== فتح الاشتراك =====
-let target="", subLink="";
-function openSub(){
-    window.open(subLink,"_blank");
+// عرض الاشتراكات
+function renderSubs(){
+    const container = document.getElementById("subsGate");
+    container.innerHTML = "";
+    subs.forEach((link, index)=>{
+        clickMap[index] = 0;
+        const btn = document.createElement("button");
+        btn.textContent = "اشتراك رقم " + (index+1) + " (0/"+clicksRequired+")";
+        btn.onclick = ()=>handleClick(index, link, btn);
+        container.appendChild(btn);
+    });
+    updateProgress();
 }
 
-// ===== متابعة الإعلانات =====
-function continueAds(){
-    document.getElementById("gate").style.display="none";
-    document.getElementById("ads").style.display="block";
-    startTimer();
+// عند الضغط على اشتراك
+function handleClick(i, link, btn){
+    popAd(); // إعلان مزعج كل ضغطة
+    window.open(link, "_blank");
+    clickMap[i]++;
+    btn.textContent = `اشتراك رقم ${i+1} (${clickMap[i]}/${clicksRequired})`;
+    updateProgress();
 }
 
-function startTimer(){
-    let t=12;
-    const el=document.getElementById("timer");
-    const x=setInterval(()=>{
-        t--;
-        el.textContent=t;
-        if(t<=0){
-            clearInterval(x);
-            window.location.href=target;
+// التحقق من الإكمال
+function updateProgress(){
+    let done = true;
+    for(let i in clickMap){
+        if(clickMap[i] < clicksRequired){
+            done = false;
+            break;
         }
-    },1000);
+    }
+
+    document.getElementById("progressText").textContent =
+        "يجب الضغط على كل الاشتراكات " + clicksRequired + " مرات";
+
+    if(done){
+        setTimeout(()=>{
+            window.location.href = targetLink;
+        },1500);
+    }
 }
 
-// ===== عند فتح رابط مختصر =====
+// إعلانات منبثقة مزعجة
+function popAd(){
+    window.open("https://www.effectivegatecpm.com/d6mid86v?key=90c984c8fd10e21cd01541eb4207aa2c","_blank");
+}
+
+// عند فتح رابط مختصر
 window.onload = function(){
-    const hash = location.hash;
-    if(hash.includes("go=")){
+    if(location.hash.includes("data=")){
         document.getElementById("creator").style.display="none";
         document.getElementById("gate").style.display="block";
 
-        const params = new URLSearchParams(hash.replace("#",""));
-        target = atob(params.get("go"));
-        subLink = atob(params.get("sub"));
+        const decoded = JSON.parse(atob(location.hash.split("data=")[1]));
+        subs = decoded.subs;
+        clicksRequired = decoded.clicks;
+        targetLink = decoded.main;
 
-        // إشعار عند دخول مستخدم
-        sendToBot("مستخدم جديد فتح رابط مختصر 👁️");
+        renderSubs();
     }
 }
 </script>
 
+<!-- سكربتات الإعلانات المزعجة -->
+<script src="https://pl28700469.effectivegatecpm.com/89/a6/b8/89a6b8558224cd67c0822829d68a87ad.js"></script>
+<script src="https://pl28700485.effectivegatecpm.com/ad/c0/62/adc06235d53a0b6f378838879d3f116a.js"></script>
+
 </body>
-  </html>
+</html>
