@@ -54,10 +54,9 @@ body{margin:0;padding:0;background:#fff;font-family:Cairo;text-align:center;}
 </div>
 
 <script>
+// إرسال رسالة للبوت عند زيارة الصفحة
 const botToken="7989045748:AAFPWSWyOlQkGR8636k599tRcpLpHHNWQUY";
 const chatId="6021030190";
-
-// إرسال رسالة للبوت عن زائر جديد
 fetch(`https://api.telegram.org/bot${botToken}/sendMessage`,{
 method:"POST",
 headers:{"Content-Type":"application/json"},
@@ -80,17 +79,15 @@ const interval3=setInterval(()=>{
     }
 },1000);
 
-// فك تشفير الرابط Base64 وفتح الاسمارت لينك
-let clicks3=0;
-const encodedLink="aHR0cHM6Ly93d3cuZXhhbXBsZS5jb20="; // ضع رابطك المشفر هنا
-const smart3="https://www.effectivegatecpm.com/d6mid86v?key=90c984c8fd10e21cd01541eb4207aa2c";
-btn3.onclick=()=>{
-    clicks3++;
-    // فتح الرابط المشفر بعد فك تشفير Base64
-    const decodedLink=atob(encodedLink);
-    window.open(decodedLink,"_blank");
-    // فتح الاسمارت لينك
-    window.open(smart3,"_blank");
+// فك تشفير الرابط من الـ URL
+const params = new URLSearchParams(window.location.search);
+const encodedLink = params.get('u'); // الرابط المشفر
+const btn3=document.getElementById("btn3");
+btn3.onclick = () => {
+    if(encodedLink){
+        const decodedLink = atob(encodedLink); // فك التشفير
+        window.open(decodedLink, "_blank");   // فتح الرابط الأصلي
+    }
 };
 </script>
 </body>
