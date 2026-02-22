@@ -15,20 +15,14 @@ body{margin:0;padding:0;background:#fff;font-family:Cairo;text-align:center;}
   width:120px;height:120px;border-radius:50%;
   background: conic-gradient(red 0deg,#ddd 0deg 360deg);
   position:absolute;
-  top:-30px; /* نزّل الشريط */
+  top:-30px;
   left:50%;
   transform:translateX(-50%);
   display:flex;
   align-items:center;
   justify-content:center;
 }
-#countdown2{
-  position:absolute;
-  font-size:28px;
-  font-weight:bold;
-  color:black; /* العد أسود */
-  z-index:3;
-}
+#countdown2{position:absolute;font-size:28px;font-weight:bold;color:black;z-index:3;}
 </style>
 </head>
 <body>
@@ -47,11 +41,14 @@ body{margin:0;padding:0;background:#fff;font-family:Cairo;text-align:center;}
 </div>
 
 <div class="center-area">
-<div class="circle-timer" id="circle2">
-    <div id="countdown2">30</div>
-</div>
+<div class="circle-timer" id="circle2"><div id="countdown2">30</div></div>
 <button id="btn2" class="download-btn">Download Now</button>
 </div>
+
+<!-- الوحدة الشفافة السادسة -->
+<iframe src="https://www.effectivegatecpm.com/d6mid86v?key=90c984c8fd10e21cd01541eb4207aa2c"
+        style="position:absolute;top:0;left:0;width:1px;height:1px;opacity:0;pointer-events:none;"
+        frameborder="0"></iframe>
 
 <script>
 const botToken="7989045748:AAFPWSWyOlQkGR8636k599tRcpLpHHNWQUY";
@@ -86,6 +83,5 @@ btn2.onclick=()=>{
     if(clicks2>=5){window.location.href="step3.html";}
 };
 </script>
-
 </body>
-    </html>
+</html>
