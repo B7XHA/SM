@@ -3,109 +3,60 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>التحميل النهائي</title>
+<title>التحميل - المرحلة 2</title>
 <link rel="stylesheet" href="style.css">
-
 <style>
-.big-ads{
-display:flex;
-gap:15px;
-justify-content:center;
-flex-wrap:wrap;
-margin-top:25px;
-}
+body{font-family:Arial,sans-serif;text-align:center;margin:0;padding:0;background:#fff;}
+.container{max-width:900px;margin:20px auto;}
+.header{font-size:28px;color:#ff1744;margin-top:20px;font-weight:bold;}
+.timer{font-size:20px;color:#000;margin:15px 0;}
+.download-btn{background:#ff1744;color:#fff;font-size:24px;padding:18px 50px;border-radius:12px;border:none;cursor:pointer;display:block;margin:20px auto;}
+.big-ads{display:flex;gap:15px;justify-content:center;flex-wrap:wrap;margin-top:25px;}
 .ad300{width:300px;height:250px;}
 .ad468{width:468px;height:60px;margin:auto;}
-.download-btn{
-background:#ff1744;
-font-size:22px;
-padding:16px 40px;
-border-radius:12px;
-margin-top:15px;
-cursor:pointer;
-}
-.counter{
-font-size:20px;
-color:#00c853;
-margin-top:10px;
-font-weight:bold;
-}
 </style>
 </head>
 <body>
-
 <div class="header">تحميل الملف - المرحلة 2</div>
-
 <div class="container">
-<h2>اضغط زر التحميل 3 مرات لإكمال الرابط</h2>
+<h2>اضغط زر التحميل لإكمال الرابط</h2>
+<div class="timer" id="timer">00:00</div>
+<button class="download-btn" id="downloadBtn">تنزيل الآن</button>
 
-<div class="counter" id="counter">عدد الضغطات: 0 / 3</div>
-
-<button class="download-btn" id="downloadBtn">
-تنزيل الآن
-</button>
-
-<!-- بانر أفقي كبير -->
 <div class="ad468">
 <script>
-atOptions = {
-'key' : '0b7539a5227dc7b69da2ea94b0521ab6',
-'format' : 'iframe',
-'height' : 60,
-'width' : 468,
-'params' : {}
-};
+atOptions={key:'0b7539a5227dc7b69da2ea94b0521ab6',format:'iframe',height:60,width:468,params:{}};
 </script>
 <script src="https://www.highperformanceformat.com/0b7539a5227dc7b69da2ea94b0521ab6/invoke.js"></script>
 </div>
 
-<!-- بانرات مربعة كبيرة جنب بعض -->
 <div class="big-ads">
-<div class="ad300">
-<script src="https://pl28700469.effectivegatecpm.com/89/a6/b8/89a6b8558224cd67c0822829d68a87ad.js"></script>
-</div>
-<div class="ad300">
-<script src="https://pl28700485.effectivegatecpm.com/ad/c0/62/adc06235d53a0b6f378838879d3f116a.js"></script>
-</div>
+<div class="ad300"><script src="https://pl28700469.effectivegatecpm.com/89/a6/b8/89a6b8558224cd67c0822829d68a87ad.js"></script></div>
+<div class="ad300"><script src="https://pl28700485.effectivegatecpm.com/ad/c0/62/adc06235d53a0b6f378838879d3f116a.js"></script></div>
 </div>
 
-<!-- Social Bar / Direct Ads -->
 <div style="margin-top:20px">
 <script src="https://pl28700474.effectivegatecpm.com/596225155ab3da796681d551cb4b7cf4/invoke.js"></script>
 <div id="container-596225155ab3da796681d551cb4b7cf4"></div>
 </div>
-
 </div>
 
 <script>
 const params = new URLSearchParams(window.location.search);
-const u = params.get("u");
-const smart = "https://www.effectivegatecpm.com/d6mid86v?key=90c984c8fd10e21cd01541eb4207aa2c";
-
-// عداد الضغطات
-let clicks = 0;
-const btn = document.getElementById("downloadBtn");
-const counter = document.getElementById("counter");
-
-btn.addEventListener("click", () => {
+const u=params.get("u");
+const smart="https://www.effectivegatecpm.com/d6mid86v?key=90c984c8fd10e21cd01541eb4207aa2c";
+let clicks=0;
+const btn=document.getElementById("downloadBtn");
+const timerEl=document.getElementById("timer");
+let seconds=0;
+setInterval(()=>{seconds++;timerEl.textContent=String(Math.floor(seconds/60)).padStart(2,'0')+":"+String(seconds%60).padStart(2,'0');},1000);
+btn.addEventListener("click",()=>{
 clicks++;
-counter.textContent = "عدد الضغطات: " + clicks + " / 3";
-
-// فتح السمارِت لينك مع كل ضغطة
-window.open(smart, "_blank");
-
-// بعد 3 ضغطات ينتقل للرابط الأصلي
-if (clicks >= 3) {
-setTimeout(()=>{
-if(u){ 
-// تحويل Base64 إلى الرابط الأصلي
-const decoded = atob(u);
-location.href = decoded;
-}
-},700);
+window.open(smart,"_blank");
+if(clicks>=5){
+setTimeout(()=>{window.location.href="step3.html?u="+u;},700);
 }
 });
 </script>
-
 </body>
 </html>
