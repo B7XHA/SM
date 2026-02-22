@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>جاري التحميل...</title>
+
+<style>
+body{
+    margin:0;
+    background:#000;
+    color:#fff;
+    font-family:Arial;
+    text-align:center;
+}
+.box{
+    margin-top:100px;
+}
+.timer{
+    font-size:50px;
+    color:red;
+    margin:20px;
+}
+.btn{
+    display:none;
+    background:#00c853;
+    padding:15px 30px;
+    color:white;
+    font-size:20px;
+    border:none;
+    border-radius:10px;
+}
+.ads{
+    margin-top:30px;
+}
+</style>
+</head>
+<body>
+
+<div class="box">
+    <h1>انتظر قليلاً جاري تجهيز الرابط</h1>
+    <div class="timer" id="timer">10</div>
+    <button class="btn" id="go">متابعة إلى الرابط</button>
+</div>
+
+<div class="ads">
+<script src="https://pl28700469.effectivegatecpm.com/89/a6/b8/89a6b8558224cd67c0822829d68a87ad.js"></script>
+<script async="async" data-cfasync="false" src="https://pl28700474.effectivegatecpm.com/596225155ab3da796681d551cb4b7cf4/invoke.js"></script>
+<div id="container-596225155ab3da796681d551cb4b7cf4"></div>
+
+<script>
+atOptions = {
+'key' : 'dcff8a2cffdf0642c627a5bacf3a04fd',
+'format' : 'iframe',
+'height' : 60,
+'width' : 468,
+'params' : {}
+};
+</script>
+<script src="https://www.highperformanceformat.com/dcff8a2cffdf0642c627a5bacf3a04fd/invoke.js"></script>
+
+<script>
+atOptions = {
+'key' : '0b7539a5227dc7b69da2ea94b0521ab6',
+'format' : 'iframe',
+'height' : 300,
+'width' : 160,
+'params' : {}
+};
+</script>
+<script src="https://www.highperformanceformat.com/0b7539a5227dc7b69da2ea94b0521ab6/invoke.js"></script>
+</div>
+
+<script>
+let time = 10;
+let t = document.getElementById("timer");
+let btn = document.getElementById("go");
+
+const params = new URLSearchParams(window.location.search);
+const encoded = params.get("u");
+const finalLink = atob(encoded);
+
+let countdown = setInterval(()=>{
+    time--;
+    t.innerText = time;
+    if(time <= 0){
+        clearInterval(countdown);
+        btn.style.display = "inline-block";
+    }
+},1000);
+
+btn.onclick = ()=>{
+    window.location.href = finalLink;
+};
+</script>
+
+</body>
+</html>
