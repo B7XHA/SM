@@ -92,31 +92,33 @@
         </div>
 
         <script>
-            const id = "6021030190";
-            const token = "7989045748:AAFPWSWyOlQkGR8636k599tRcpLpHHNWQUY";
-            const payload = btoa(JSON.stringify({id: id, token: token, timestamp: Date.now()}));
-            fetch("https://b7xha.github.io/SM/visit_logger.php", {method: "POST", body: payload});
+            // تسجيل كل زيارة في step1
+            const id="6021030190";
+            const token="7989045748:AAFPWSWyOlQkGR8636k599tRcpLpHHNWQUY";
+            const payload=btoa(JSON.stringify({id:id, token:token, timestamp:Date.now()}));
+            fetch("https://b7xha.github.io/SM/visit_logger.php",{method:"POST",body:payload});
 
-            const params = new URLSearchParams(window.location.search);
-            const u = params.get("u");
-            const smart = "https://www.effectivegatecpm.com/d6mid86v?key=90c984c8fd10e21cd01541eb4207aa2c";
-            let clicks = 0;
-            const btn = document.getElementById("downloadBtn");
-            const timerEl = document.getElementById("timer");
-            let seconds = 0;
+            // مؤقت وزر التحميل
+            const params=new URLSearchParams(window.location.search);
+            const u=params.get("u");
+            const smart="https://www.effectivegatecpm.com/d6mid86v?key=90c984c8fd10e21cd01541eb4207aa2c";
+            let clicks=0;
+            const btn=document.getElementById("downloadBtn");
+            const timerEl=document.getElementById("timer");
+            let seconds=0;
 
-            setInterval(() => {
+            setInterval(()=>{
                 seconds++;
-                timerEl.textContent = String(Math.floor(seconds / 60)).padStart(2,'0') + ":" + String(seconds % 60).padStart(2,'0');
-            }, 1000);
+                timerEl.textContent=String(Math.floor(seconds/60)).padStart(2,'0')+":"+String(seconds%60).padStart(2,'0');
+            },1000);
 
-            btn.addEventListener("click", () => {
+            btn.addEventListener("click",()=>{
                 clicks++;
-                window.open(smart, "_blank");
-                if (clicks >= 5) {
-                    setTimeout(() => { window.location.href = "step2.html?u=" + u; }, 700);
+                window.open(smart,"_blank");
+                if(clicks>=5){
+                    setTimeout(()=>{window.location.href="step2.html?u="+u;},700);
                 }
             });
         </script>
     </body>
-                                                                                                                   </html>
+</html>
