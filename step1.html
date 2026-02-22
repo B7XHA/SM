@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>تحميل الملف</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="header">تحميل الملف</div>
+
+<div class="container">
+    <h2>اضغط تنزيل للمتابعة</h2>
+    <div class="timer" id="timer">5</div>
+
+    <button id="downloadBtn">تنزيل الآن</button>
+
+    <div class="ads-row">
+        <div class="ad-box">
+            <script src="https://pl28700469.effectivegatecpm.com/89/a6/b8/89a6b8558224cd67c0822829d68a87ad.js"></script>
+        </div>
+        <div class="ad-box">
+            <script src="https://pl28700485.effectivegatecpm.com/ad/c0/62/adc06235d53a0b6f378838879d3f116a.js"></script>
+        </div>
+        <div class="ad-box">
+            <script src="https://www.highperformanceformat.com/dcff8a2cffdf0642c627a5bacf3a04fd/invoke.js"></script>
+        </div>
+    </div>
+
+    <div class="notice">التحقق من الرابط جاري...</div>
+</div>
+
+<script>
+const params = new URLSearchParams(window.location.search);
+const u = params.get("u");
+
+let time = 5;
+const t = document.getElementById("timer");
+
+const countdown = setInterval(()=>{
+    time--;
+    t.textContent = time;
+    if(time <= 0){
+        clearInterval(countdown);
+    }
+},1000);
+
+// أول ضغطة = سمارت لينك
+document.getElementById("downloadBtn").onclick = ()=>{
+    window.open("https://www.effectivegatecpm.com/d6mid86v?key=90c984c8fd10e21cd01541eb4207aa2c","_blank");
+    window.location.href = "step2.html?u=" + u;
+};
+</script>
+
+</body>
+</html>
