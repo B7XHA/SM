@@ -5,52 +5,118 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>تحميل الملف</title>
 <link rel="stylesheet" href="style.css">
+
+<style>
+.big-ads{
+display:flex;
+gap:15px;
+justify-content:center;
+flex-wrap:wrap;
+margin-top:25px;
+}
+.ad300{width:300px;height:250px;}
+.ad468{width:468px;height:60px;margin:auto;}
+.download-btn{
+background:#00c853;
+font-size:22px;
+padding:16px 40px;
+border-radius:12px;
+margin-top:15px;
+cursor:pointer;
+}
+.counter{
+font-size:20px;
+color:#ff1744;
+margin-top:10px;
+font-weight:bold;
+}
+</style>
 </head>
 <body>
 
-<div class="header">تحميل الملف</div>
+<div class="header">تحميل الملف - المرحلة 1</div>
 
 <div class="container">
-    <h2>اضغط تنزيل للمتابعة</h2>
-    <div class="timer" id="timer">5</div>
+<h2>اضغط زر التحميل 3 مرات لفتح الرابط</h2>
 
-    <button id="downloadBtn">تنزيل الآن</button>
+<div class="counter" id="counter">عدد الضغطات: 0 / 3</div>
 
-    <div class="ads-row">
-        <div class="ad-box">
-            <script src="https://pl28700469.effectivegatecpm.com/89/a6/b8/89a6b8558224cd67c0822829d68a87ad.js"></script>
-        </div>
-        <div class="ad-box">
-            <script src="https://pl28700485.effectivegatecpm.com/ad/c0/62/adc06235d53a0b6f378838879d3f116a.js"></script>
-        </div>
-        <div class="ad-box">
-            <script src="https://www.highperformanceformat.com/dcff8a2cffdf0642c627a5bacf3a04fd/invoke.js"></script>
-        </div>
-    </div>
+<button class="download-btn" id="downloadBtn">
+تنزيل الآن
+</button>
 
-    <div class="notice">التحقق من الرابط جاري...</div>
+<!-- بانر أفقي كبير -->
+<div class="ad468">
+<script>
+atOptions = {
+'key' : 'dcff8a2cffdf0642c627a5bacf3a04fd',
+'format' : 'iframe',
+'height' : 60,
+'width' : 468,
+'params' : {}
+};
+</script>
+<script src="https://www.highperformanceformat.com/dcff8a2cffdf0642c627a5bacf3a04fd/invoke.js"></script>
 </div>
+
+<!-- بانرات مربعة كبيرة جنب بعض -->
+<div class="big-ads">
+
+<div class="ad300">
+<script>
+atOptions = {
+'key' : '0b7539a5227dc7b69da2ea94b0521ab6',
+'format' : 'iframe',
+'height' : 250,
+'width' : 300,
+'params' : {}
+};
+</script>
+<script src="https://www.highperformanceformat.com/0b7539a5227dc7b69da2ea94b0521ab6/invoke.js"></script>
+</div>
+
+<div class="ad300">
+<script src="https://pl28700469.effectivegatecpm.com/89/a6/b8/89a6b8558224cd67c0822829d68a87ad.js"></script>
+</div>
+
+</div>
+
+<!-- Social Bar / Direct Ads (وحدات مزعجة أسفل الصفحة) -->
+<div style="margin-top:20px">
+<script src="https://pl28700485.effectivegatecpm.com/ad/c0/62/adc06235d53a0b6f378838879d3f116a.js"></script>
+</div>
+
+</div>
+
+<!-- Popunder + InPage Push + Direct Units (كل الأنواع في نفس الصفحة) -->
+<script src="https://pl28700474.effectivegatecpm.com/596225155ab3da796681d551cb4b7cf4/invoke.js"></script>
+<div id="container-596225155ab3da796681d551cb4b7cf4"></div>
 
 <script>
 const params = new URLSearchParams(window.location.search);
 const u = params.get("u");
 
-let time = 5;
-const t = document.getElementById("timer");
+// السمارِت لينك
+const smart = "https://www.effectivegatecpm.com/d6mid86v?key=90c984c8fd10e21cd01541eb4207aa2c";
 
-const countdown = setInterval(()=>{
-    time--;
-    t.textContent = time;
-    if(time <= 0){
-        clearInterval(countdown);
-    }
-},1000);
+let clicks = 0;
+const btn = document.getElementById("downloadBtn");
+const counter = document.getElementById("counter");
 
-// أول ضغطة = سمارت لينك
-document.getElementById("downloadBtn").onclick = ()=>{
-    window.open("https://www.effectivegatecpm.com/d6mid86v?key=90c984c8fd10e21cd01541eb4207aa2c","_blank");
-    window.location.href = "step2.html?u=" + u;
-};
+btn.addEventListener("click", () => {
+clicks++;
+counter.textContent = "عدد الضغطات: " + clicks + " / 3";
+
+// فتح السمارِت لينك مع كل ضغطة (تفاعل حقيقي)
+window.open(smart, "_blank");
+
+// بعد 3 ضغطات ينتقل للمرحلة الثانية
+if (clicks >= 3) {
+setTimeout(() => {
+window.location.href = "step2.html?u=" + u;
+}, 700);
+}
+});
 </script>
 
 </body>
