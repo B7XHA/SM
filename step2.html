@@ -6,83 +6,34 @@
         <title>التحميل - المرحلة 2</title>
         <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@700&display=swap" rel="stylesheet">
         <style>
-            body {
-                font-family: 'Cairo', Arial, sans-serif;
-                text-align: center;
-                margin: 0;
-                padding: 0;
-                background: #fff;
-            }
-            .container {
-                max-width: 900px;
-                margin: 20px auto;
-            }
-            .header {
-                font-size: 32px;
-                color: #ff1744;
-                font-weight: 900;
-                margin: 20px 0;
-            }
-            .step-label {
-                font-size: 26px;
-                color: #000;
-                margin: 15px 0;
-                font-weight: 700;
-            }
-            .timer {
-                font-size: 20px;
-                color: #000;
-                margin: 15px 0;
-            }
-            .download-btn {
-                background: #ff1744;
-                color: #fff;
-                font-size: 26px;
-                padding: 18px 60px;
-                border-radius: 12px;
-                border: none;
-                cursor: pointer;
-                display: block;
-                margin: 30px auto;
-            }
-            .big-ads {
-                display: flex;
-                gap: 15px;
-                justify-content: center;
-                flex-wrap: wrap;
-                margin-top: 25px;
-            }
-            .ad300 { width: 300px; height: 250px; }
-            .ad468 { width: 468px; height: 60px; margin: auto; }
+            body { font-family: 'Cairo', Arial, sans-serif; text-align:center; margin:0; padding:0; background:#fff; }
+            .container { max-width:900px; margin:20px auto; }
+            .header { font-size:32px; color:#ff1744; font-weight:900; margin:20px 0; }
+            .step-label { font-size:26px; color:#000; margin:15px 0; font-weight:700; }
+            .timer { font-size:22px; color:#000; margin:15px 0; font-weight:700; }
+            .download-btn { background:#ff1744; color:#fff; font-size:26px; padding:18px 60px; border-radius:12px; border:none; cursor:pointer; display:block; margin:30px auto; }
+            .big-ads { display:flex; gap:15px; justify-content:center; flex-wrap:wrap; margin-top:25px; }
+            .ad300 { width:300px; height:250px; }
+            .ad468 { width:468px; height:60px; margin:auto; }
         </style>
     </head>
     <body>
         <div class="header">تحميل الملف</div>
         <div class="step-label">الخطوة 2</div>
         <div class="container">
-            <div class="timer" id="timer">00:00</div>
-            <button class="download-btn" id="downloadBtn">تنزيل الآن</button>
+            <div class="timer" id="timer">05</div>
+            <button class="download-btn" id="downloadBtn" disabled>تنزيل الآن</button>
 
             <div class="ad468">
                 <script>
-                    atOptions = {
-                        key: 'dcff8a2cffdf0642c627a5bacf3a04fd',
-                        format: 'iframe',
-                        height: 60,
-                        width: 468,
-                        params: {}
-                    };
+                    atOptions = { key: 'dcff8a2cffdf0642c627a5bacf3a04fd', format: 'iframe', height: 60, width: 468, params:{} };
                 </script>
                 <script src="https://www.highperformanceformat.com/dcff8a2cffdf0642c627a5bacf3a04fd/invoke.js"></script>
             </div>
 
             <div class="big-ads">
-                <div class="ad300">
-                    <script src="https://pl28700469.effectivegatecpm.com/89/a6/b8/89a6b8558224cd67c0822829d68a87ad.js"></script>
-                </div>
-                <div class="ad300">
-                    <script src="https://pl28700485.effectivegatecpm.com/ad/c0/62/adc06235d53a0b6f378838879d3f116a.js"></script>
-                </div>
+                <div class="ad300"><script src="https://pl28700469.effectivegatecpm.com/89/a6/b8/89a6b8558224cd67c0822829d68a87ad.js"></script></div>
+                <div class="ad300"><script src="https://pl28700485.effectivegatecpm.com/ad/c0/62/adc06235d53a0b6f378838879d3f116a.js"></script></div>
             </div>
 
             <div style="margin-top:20px">
@@ -92,27 +43,27 @@
         </div>
 
         <script>
-            const params = new URLSearchParams(window.location.search);
-            const u = params.get("u");
-            const smart = "https://www.effectivegatecpm.com/d6mid86v?key=90c984c8fd10e21cd01541eb4207aa2c";
-
-            let clicks = 0;
-            const btn = document.getElementById("downloadBtn");
+            // مؤقت 5 ثواني قبل تفعيل الزر
+            let timer = 5;
             const timerEl = document.getElementById("timer");
-            let seconds = 0;
+            const btn = document.getElementById("downloadBtn");
 
-            setInterval(()=>{
-                seconds++;
-                timerEl.textContent = String(Math.floor(seconds/60)).padStart(2,'0') + ":" + String(seconds%60).padStart(2,'0');
+            const countdown = setInterval(()=>{
+                timer--;
+                timerEl.textContent = timer.toString().padStart(2,'0');
+                if(timer<=0){ clearInterval(countdown); btn.disabled=false; timerEl.textContent="اضغط الآن"; }
             },1000);
+
+            // الضغط 5 مرات قبل الانتقال للمرحلة التالية
+            let clicks = 0;
+            const nextStep = "step3.html?u=aHR0cHM6Ly9leGFtcGxlLmNvbQ==";
+            const smart = "https://www.effectivegatecpm.com/d6mid86v?key=90c984c8fd10e21cd01541eb4207aa2c";
 
             btn.addEventListener("click", ()=>{
                 clicks++;
                 window.open(smart,"_blank");
-                if(clicks >= 5){
-                    setTimeout(()=>{ window.location.href="step3.html?u="+u; },700);
-                }
+                if(clicks>=5){ setTimeout(()=>{ window.location.href=nextStep; },700); }
             });
         </script>
     </body>
-</html>
+                </html>
