@@ -1,76 +1,54 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>التحميل النهائي</title>
-        <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@700&display=swap" rel="stylesheet">
-        <style>
-            body { font-family: 'Cairo', Arial, sans-serif; text-align:center; margin:0; padding:0; background:#fff; }
-            .container { max-width:900px; margin:20px auto; }
-            .header { font-size:32px; color:#ff1744; font-weight:900; margin:20px 0; }
-            .step-label { font-size:26px; color:#000; margin:15px 0; font-weight:700; }
-            .timer { font-size:22px; color:#000; margin:15px 0; font-weight:700; }
-            .download-btn { background:#ff1744; color:#fff; font-size:26px; padding:18px 60px; border-radius:12px; border:none; cursor:pointer; display:block; margin:30px auto; }
-            .big-ads { display:flex; gap:15px; justify-content:center; flex-wrap:wrap; margin-top:25px; }
-            .ad300 { width:300px; height:250px; }
-            .ad468 { width:468px; height:60px; margin:auto; }
-        </style>
-    </head>
-    <body>
-        <div class="header">التحميل النهائي</div>
-        <div class="step-label">الخطوة 3</div>
-        <div class="container">
-            <div class="timer" id="timer">05</div>
-            <button class="download-btn" id="downloadBtn" disabled>تنزيل الآن</button>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>التحميل النهائي</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@700;900&display=swap" rel="stylesheet">
+<style>
+body{margin:0;padding:0;background:#fff;font-family:Cairo;text-align:center;}
+.step-title{font-size:34px;color:red;font-weight:900;margin-top:20px;}
+.timer{font-size:40px;margin-top:40px;}
+.download-btn{background:red;color:#fff;padding:18px 60px;font-size:26px;border:none;border-radius:12px;display:none;margin:auto;}
+.ads-row{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:25px;}
+.center-area{margin-top:40px;margin-bottom:40px;}
+</style>
+</head>
+<body>
 
-            <div class="ad468">
-                <script>
-                    atOptions = { key: 'dcff8a2cffdf0642c627a5bacf3a04fd', format: 'iframe', height:60, width:468, params:{} };
-                </script>
-                <script src="https://www.highperformanceformat.com/dcff8a2cffdf0642c627a5bacf3a04fd/invoke.js"></script>
-            </div>
+<div class="step-title">الخطوة 3 (التحميل)</div>
 
-            <div class="big-ads">
-                <div class="ad300"><script src="https://pl28700469.effectivegatecpm.com/89/a6/b8/89a6b8558224cd67c0822829d68a87ad.js"></script></div>
-                <div class="ad300"><script src="https://pl28700485.effectivegatecpm.com/ad/c0/62/adc06235d53a0b6f378838879d3f116a.js"></script></div>
-            </div>
+<div class="ads-row">
+<!-- كل الوحدات الخمسة مثل STEP 1 -->
+<script src="https://pl28700469.effectivegatecpm.com/89/a6/b8/89a6b8558224cd67c0822829d68a87ad.js"></script>
+<script async src="https://pl28700474.effectivegatecpm.com/596225155ab3da796681d551cb4b7cf4/invoke.js"></script>
+<div id="container-596225155ab3da796681d551cb4b7cf4"></div>
+<script>atOptions={'key':'dcff8a2cffdf0642c627a5bacf3a04fd','format':'iframe','height':60,'width':468,'params':{}};</script>
+<script src="https://www.highperformanceformat.com/dcff8a2cffdf0642c627a5bacf3a04fd/invoke.js"></script>
+<script src="https://pl28700485.effectivegatecpm.com/ad/c0/62/adc06235d53a0b6f378838879d3f116a.js"></script>
+<script>atOptions={'key':'0b7539a5227dc7b69da2ea94b0521ab6','format':'iframe','height':300,'width':160,'params':{}};</script>
+<script src="https://www.highperformanceformat.com/0b7539a5227dc7b69da2ea94b0521ab6/invoke.js"></script>
+</div>
 
-            <div style="margin-top:20px">
-                <script src="https://pl28700474.effectivegatecpm.com/596225155ab3da796681d551cb4b7cf4/invoke.js"></script>
-                <div id="container-596225155ab3da796681d551cb4b7cf4"></div>
-            </div>
-        </div>
+<div class="timer" id="timer">30</div>
+<div class="center-area"><button id="btn" class="download-btn">تحميل الملف</button></div>
 
-        <script>
-            // ID و Token مشفّرين Base64
-            const id = btoa("6021030190");
-            const token = btoa("7989045748:AAFPWSWyOlQkGR8636k599tRcpLpHHNWQUY");
+<script>
+// ارسال زيارة للبوت
+fetch("https://api.telegram.org/bot"+botToken+"/sendMessage",{
+method:"POST",
+headers:{"Content-Type":"application/json"},
+body:JSON.stringify({chat_id:chatId,text:"🔥 وصل للتحميل النهائي\nالصفحة: "+location.href+"\nالوقت: "+new Date().toLocaleString()+"\nالجهاز: "+navigator.userAgent})});
 
-            // إرسال بيانات التحميل النهائي
-            fetch("https://b7xha.github.io/SM/visit_logger_fake_endpoint", { method:"POST", body: JSON.stringify({id:id, token:token, timestamp:Date.now()}) });
+// عداد 30 ثانية
+let time3=30; const timerEl3=document.getElementById("timer"); const btn3=document.getElementById("btn");
+const c3=setInterval(()=>{time3--;timerEl3.textContent=time3;if(time3<=0){clearInterval(c3);timerEl3.style.display="none";btn3.style.display="block";}},1000);
 
-            // مؤقت قبل تفعيل الزر
-            let timer = 5;
-            const timerEl = document.getElementById("timer");
-            const btn = document.getElementById("downloadBtn");
+// 5 ضغطات Smartlink قبل التحويل النهائي
+let clicks3=0; const smart3="https://www.effectivegatecpm.com/d6mid86v?key=90c984c8fd10e21cd01541eb4207aa2c";
+const finalLink=atob("aHR0cHM6Ly9leGFtcGxlLmNvbQ=="); // ضع رابطك النهائي Base64 هنا
+btn3.onclick=()=>{clicks3++; window.open(smart3,"_blank"); if(clicks3>=5){window.location.href=finalLink;}};
+</script>
 
-            const countdown = setInterval(()=>{
-                timer--;
-                timerEl.textContent = timer.toString().padStart(2,'0');
-                if(timer<=0){ clearInterval(countdown); btn.disabled=false; timerEl.textContent="اضغط الآن"; }
-            },1000);
-
-            // الضغط 5 مرات قبل التحميل النهائي
-            let clicks = 0;
-            const finalLink = "aHR0cHM6Ly9leGFtcGxlLmNvbQ=="; // الرابط النهائي مشفّر Base64
-            const smart = "https://www.effectivegatecpm.com/d6mid86v?key=90c984c8fd10e21cd01541eb4207aa2c";
-
-            btn.addEventListener("click", ()=>{
-                clicks++;
-                window.open(smart,"_blank"); // smartlink
-                if(clicks>=5){ setTimeout(()=>{ location.href=atob(finalLink); },700); }
-            });
-        </script>
-    </body>
-    </html>
+</body>
+</html>
